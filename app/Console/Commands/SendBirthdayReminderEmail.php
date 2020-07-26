@@ -49,6 +49,7 @@ class SendBirthdayReminderEmail extends Command
           $users1 = User::whereMonth('anniversary', '=', date('m'))
                         ->whereDay('anniversary', '=', date('d'))
                         ->get();
+                        $url = "https://api.chat-api.com/instance154402/sendMessage?token=acend0y6vsht5d81";
 
             foreach($users as $user)
             {
@@ -57,12 +58,13 @@ class SendBirthdayReminderEmail extends Command
                 // $i++; 
 
                 $data = [
-                    'phone' => '07427579709', // Receivers phone
-                    'body' => "Today is  $user->name Birthday ", // Message
+                    'phone' => '00447427579709', // Receivers phone
+                    //    'phone' => ' +447789226946',
+                   
+                    'body' => "Today is  $user->name Birthday: " .  date("d-m-Y", strtotime($user->date_birth)),  // Message
                 ];
                 $json = json_encode($data); // Encode data to JSON
                 // URL for request POST /message
-                $url = 'https://api.chat-api.com/message?token=acend0y6vsht5d81';
                 // Make a POST request
                 $options = stream_context_create(['http' => [
                         'method'  => 'POST',
@@ -79,11 +81,9 @@ class SendBirthdayReminderEmail extends Command
             foreach($users1 as $user)
             {
                 $data = [
-                    'phone' => '07427579709', // Receivers phone
-                    // 'phone' => '+970599984222', // Receivers phone
-                    'body' => "Today is  $user->name Anniversary ", // Message
+                    'phone' => '00447427579709', // Receivers phone
+                    'body' => "Today is  $user->name Anniversary :   ".  date("d-m-Y", strtotime($user->anniversary)), // Message
                 ];
-                $msg = "Today is  $user->name Anniversary ";
                 $json = json_encode($data); 
                 // $url = 'https://api.chat-api.com/message?token=acend0y6vsht5d81';
                 $url = "https://api.chat-api.com/instance154402/sendMessage?token=acend0y6vsht5d81";
